@@ -1,0 +1,67 @@
+{
+  "name": "addressbook-api",
+  "scripts": {
+    "test": "make test",
+    "precommit": "lint-staged",
+    "heroku-postbuild": "make compile"
+  },
+  "type-check": "tsc",
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "resolutions": {
+    "babel-core": "^7.0.0-bridge.0"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "ip": "^1.1.5",
+    "joi": "^13.1.1",
+    "knex": "^0.14.2",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "objection": "^0.9.4",
+    "pg": "^7.4.1",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/node": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/preset-stage-3": "^7.0.0-beta.40",
+    "@babel/preset-typescript": "^7.0.0-beta.40",
+    "@types/ip": "0.0.30",
+    "@types/jest": "^22.1.1",
+    "@types/joi": "^13.0.5",
+    "@types/knex": "^0.14.5",
+    "@types/koa": "^2.0.44",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-compose": "^3.2.2",
+    "@types/koa-router": "^7.0.27",
+    "@types/node": "^9.4.0",
+    "@types/ramda": "^0.25.17",
+    "@types/supertest": "^2.0.4",
+    "babel-plugin-module-resolver": "^3.1.0",
+    "husky": "^0.14.3",
+    "jest": "^22.1.4",
+    "knex-migrate": "^1.5.1",
+    "lint-staged": "^6.1.0",
+    "nodemon": "^1.14.12",
+    "prettier": "^1.10.2",
+    "supertest": "^3.0.0",
+    "ts-jest": "^22.0.3",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.7.0",
+    "typescript": "^2.7.1"
+  },
+  "license": "ISC",
+  "engines": {
+    "node": "^8.10.0",
+    "npm": "5.6.0"
+  }
+}
