@@ -23,8 +23,10 @@ describe('middleware > validate', () => {
       .post('/test')
       .send({ foo: 'bar' })
       .expect(400, {
-        code: 'E_VALIDATION',
-        message: 'child "foo" fails because ["foo" must be a number]',
+        error: {
+          code: 'E_VALIDATION',
+          message: 'child "foo" fails because ["foo" must be a number]',
+        },
       })
   })
 
@@ -42,7 +44,7 @@ describe('middleware > validate', () => {
     ])
 
     return request(customApp.listen())
-      .post('/test')
+      .post('/')
       .send({ timestamp: 1521310885000 })
       .expect(200, {
         timestamp: '2018-03-17T18:21:25.000Z',

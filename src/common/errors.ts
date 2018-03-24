@@ -1,33 +1,17 @@
-/* tslint:disable:max-classes-per-file */
+import Boom from 'boom'
 
-export class ApiError extends Error {
-  public type: string
-  public status: number
-
-  constructor(message: string, type: string, status: number) {
-    super(message)
-    Error.captureStackTrace(this, this.constructor)
-    this.message = message
-    this.name = this.constructor.name
-    this.type = type
-    this.status = status
-  }
+export enum ErrorCodes {
+  UNKNOWN = 'E_UNKNOWN',
+  VALIDATION = 'E_VALIDATION',
+  INVALID_JSON_BODY = 'E_INVALID_JSON_BODY',
 }
 
-export class UnauthorizedError extends ApiError {
-  constructor(message: string) {
-    super(message, 'E_UNAUTHORIZED', 401)
-  }
-}
+export const validationError = (message: any): Boom =>
+  Boom.badRequest(message, {
+    code: ErrorCodes.VALIDATION,
+  })
 
-export class ValidationError extends ApiError {
-  constructor(message: any) {
-    super(message, 'E_VALIDATION', 400)
-  }
-}
-
-export class InvalidJsonBodyError extends ApiError {
-  constructor() {
-    super('Request JSON body is not valid', 'E_INVALID_JSON_BODY', 400)
-  }
-}
+export const invalidJsonBodyError = (): Boom =>
+  Boom.badRequest('Request JSON body is not valid', {
+    code: ErrorCodes.INVALID_JSON_BODY,
+  })
