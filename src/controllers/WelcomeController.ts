@@ -1,5 +1,5 @@
 import Koa from 'koa'
 
-export const welcome = (ctx: Koa.Context) => {
+export const welcomeController = (ctx: Koa.Context) => {
   ctx.body = 'Addressbook API 🤖'
 }

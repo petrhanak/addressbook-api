@@ -35,7 +35,7 @@ test-coverage: node_modules
 	$(call log, "Running tests with coverage")
 	jest --forceExit --coverage
 
-cleanup: node_modules
+cleanup:
 	$(call log, "Formatting files")
 	prettier "{src,test}/**/*.ts" --write --loglevel warn
 	$(call log, "Linting files")
@@ -48,11 +48,13 @@ db-create-migration:
 
 db-migrate:
 	$(call log, "Database migration")
-	knex-migrate up --knexfile ./src/database/knexfile.js
+	knex migrate:latest --knexfile ./src/database/knexfile.js
 
-db-reset:
-	$(call log, "Database reset")
-	knex-migrate redo
+db-rollback:
+	$(call log, "Database rollback")
+	knex migrate:rollback --knexfile ./src/database/knexfile.js
+
+db-reset: db-rollback db-migrate
 
 db-create-seed:
 	knex seed:make ${NAME} --knexfile ./src/database/knexfile.js

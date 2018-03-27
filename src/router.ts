@@ -1,10 +1,15 @@
 import compose from 'koa-compose'
 import Router from 'koa-router'
-import { welcome } from './controllers'
+import { signupController, welcomeController } from './controllers'
 
 export const router = new Router()
 
-router.get('/', welcome)
+router
+  // welcome
+  .get('/', welcomeController)
+
+  // auth
+  .post('/signup', signupController)
 
 export const routerMiddleware = compose([
   router.routes(),

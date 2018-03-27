@@ -22,9 +22,9 @@ describe('middleware > validate', () => {
     return request(customApp.listen())
       .post('/test')
       .send({ foo: 'bar' })
-      .expect(400, {
+      .expect(422, {
         error: {
-          code: 'E_VALIDATION',
+          code: 'InvalidSchema',
           message: 'child "foo" fails because ["foo" must be a number]',
         },
       })

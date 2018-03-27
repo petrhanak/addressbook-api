@@ -3,10 +3,13 @@ import { ErrorCodes, invalidJsonBodyError } from 'common/errors'
 import { Context } from 'koa'
 import bodyParser from 'koa-bodyparser'
 import compose from 'koa-compose'
-import { pathOr } from 'ramda'
 
-const createResponse = (message: string, code?: string) => ({
+const createResponse = (
+  message: string,
+  { code = ErrorCodes.UNKNOWN, ...details }: { code?: string } = {}
+) => ({
   error: {
+    ...details,
     code,
     message,
   },
@@ -20,12 +23,14 @@ export const errorMiddleware = (ctx: Context, next: () => Promise<any>) => {
       }
     },
     err => {
-      const error = Boom.boomify(err)
+      const error = Boom.boomify(err, {
+        statusCode: err.status,
+      })
 
       ctx.status = error.output.statusCode
 
-      const errorCode = pathOr(ErrorCodes.UNKNOWN, ['data', 'code'], error)
-      ctx.body = createResponse(error.message, errorCode)
+      const data = error.data || {}
+      ctx.body = createResponse(error.message, data)
     }
   )
 }

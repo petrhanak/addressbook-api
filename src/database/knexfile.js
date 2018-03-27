@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   development: {
     client: 'pg',
@@ -9,7 +11,7 @@ module.exports = {
     },
 
     migrations: {
-      directory: './migrations',
+      directory: path.resolve(__dirname, 'migrations'),
       stub: 'migration.stub.js'
     }
   },

@@ -1,17 +1,31 @@
 import Boom from 'boom'
+import { ZXCVBNResult } from 'zxcvbn'
 
 export enum ErrorCodes {
-  UNKNOWN = 'E_UNKNOWN',
-  VALIDATION = 'E_VALIDATION',
-  INVALID_JSON_BODY = 'E_INVALID_JSON_BODY',
+  UNKNOWN = 'Unknown',
+  INVALID_SCHEMA = 'InvalidSchema',
+  INVALID_JSON_BODY = 'InvalidJsonBody',
+  WEAK_PASSWORD = 'WeakPassword',
+  DUPLICATE_EMAIL = 'DuplicateEmail',
 }
 
 export const validationError = (message: any): Boom =>
-  Boom.badRequest(message, {
-    code: ErrorCodes.VALIDATION,
+  Boom.badData(message, {
+    code: ErrorCodes.INVALID_SCHEMA,
   })
 
 export const invalidJsonBodyError = (): Boom =>
   Boom.badRequest('Request JSON body is not valid', {
     code: ErrorCodes.INVALID_JSON_BODY,
+  })
+
+export const weakPasswordError = (result: ZXCVBNResult): Boom =>
+  Boom.badData(result.feedback.warning, {
+    code: ErrorCodes.WEAK_PASSWORD,
+    score: result.score,
+  })
+
+export const duplicateEmail = (): Boom =>
+  Boom.conflict('Email is already registered', {
+    code: ErrorCodes.DUPLICATE_EMAIL,
   })

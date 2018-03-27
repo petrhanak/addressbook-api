@@ -15,7 +15,7 @@ describe('middleware > global', () => {
     return request(customApp.listen())
       .get('/')
       .expect(500, {
-        error: { code: 'E_UNKNOWN', message: 'Internal Server Error' },
+        error: { code: 'Unknown', message: 'Internal Server Error' },
       })
   })
 
@@ -49,7 +49,7 @@ describe('middleware > global', () => {
       .send('{ invalid JSON body " : }')
       .expect(400, {
         error: {
-          code: 'E_INVALID_JSON_BODY',
+          code: 'InvalidJsonBody',
           message: 'Request JSON body is not valid',
         },
       })
