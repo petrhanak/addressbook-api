@@ -3,6 +3,7 @@ import { ErrorCodes, invalidJsonBodyError } from 'common/errors'
 import { Context } from 'koa'
 import bodyParser from 'koa-bodyparser'
 import compose from 'koa-compose'
+import { omit } from 'ramda'
 
 const createResponse = (
   message: string,
@@ -29,7 +30,9 @@ export const errorMiddleware = (ctx: Context, next: () => Promise<any>) => {
 
       ctx.status = error.output.statusCode
 
-      const data = error.data || {}
+      // todo refactor
+      const data =
+        error.data || omit(['error'], error.output.payload.attributes) || {}
       ctx.body = createResponse(error.message, data)
     }
   )

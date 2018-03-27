@@ -4,7 +4,7 @@ import { verifyAccessToken } from 'services/CryptoService'
 import request from 'supertest'
 import { resetDatabase } from '../utils'
 
-describe('endpoint > auth', () => {
+describe('endpoint > /signup', () => {
   beforeEach(async () => {
     await resetDatabase()
   })

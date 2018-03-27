@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { weakPasswordError } from 'common/errors'
+import { invalidCredentials, weakPasswordError } from 'common/errors'
 import config from 'config'
 import jwt from 'jsonwebtoken'
 import { omit } from 'ramda'
@@ -32,3 +32,28 @@ export const verifyAccessToken = (accessToken: string): IAccessTokenPayload =>
   jwt.verify(accessToken, config.auth.secret) as IAccessTokenPayload
 
 export const sanitizeUser = (user: User) => omit(['password'], user)
+
+export const validateUser = async (
+  user: User | undefined,
+  password: string
+) => {
+  if (!user) {
+    throw invalidCredentials()
+  }
+
+  const isValid = await bcrypt.compare(password, user.password)
+
+  if (!isValid) {
+    throw invalidCredentials()
+  }
+}
+
+export const generateUserResponse = async (user: User) => {
+  const accessToken = await createAccessToken(user.id)
+  const sanitizedUser = sanitizeUser(user)
+
+  return {
+    accessToken,
+    user: sanitizedUser,
+  }
+}

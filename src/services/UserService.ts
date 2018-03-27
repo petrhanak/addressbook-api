@@ -3,9 +3,9 @@ import { User } from 'database/models'
 import { toLower } from 'ramda'
 import {
   checkPasswordStrength,
-  createAccessToken,
+  generateUserResponse,
   hashPassword,
-  sanitizeUser,
+  validateUser,
 } from 'services/CryptoService'
 
 const checkEmailDuplicity = async (email: string) => {
@@ -37,11 +37,23 @@ export const createUser = async ({
     password: passwordHash,
   })
 
-  const accessToken = await createAccessToken(user.id)
-  const sanitizedUser = sanitizeUser(user)
+  return generateUserResponse(user)
+}
 
-  return {
-    accessToken,
-    user: sanitizedUser,
-  }
+export const authenticateUser = async ({
+  email,
+  password,
+}: {
+  email: string
+  password: string
+}) => {
+  const lowerEmail = toLower(email)
+
+  // const passwordHash = await hashPassword(password)
+
+  const user = await User.query().findOne({ email: lowerEmail })
+
+  await validateUser(user, password)
+
+  return generateUserResponse(user!)
 }

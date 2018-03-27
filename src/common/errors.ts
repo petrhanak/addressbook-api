@@ -7,6 +7,7 @@ export enum ErrorCodes {
   INVALID_JSON_BODY = 'InvalidJsonBody',
   WEAK_PASSWORD = 'WeakPassword',
   DUPLICATE_EMAIL = 'DuplicateEmail',
+  INVALID_CREDENTIALS = 'InvalidCredentials',
 }
 
 export const validationError = (message: any): Boom =>
@@ -28,4 +29,9 @@ export const weakPasswordError = (result: ZXCVBNResult): Boom =>
 export const duplicateEmail = (): Boom =>
   Boom.conflict('Email is already registered', {
     code: ErrorCodes.DUPLICATE_EMAIL,
+  })
+
+export const invalidCredentials = (): Boom =>
+  Boom.unauthorized('Login credentials are incorrect', 'Bearer', {
+    code: ErrorCodes.INVALID_CREDENTIALS,
   })
