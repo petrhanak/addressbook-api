@@ -13,4 +13,7 @@ module.exports = {
     'node_modules',
     'src'
   ],
+  "moduleNameMapper": {
+    "^~/(.*)$": "<rootDir>/src/$1"
+  },
 }

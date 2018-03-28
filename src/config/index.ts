@@ -7,7 +7,12 @@ interface IConfig {
     secret: string
     effectivePasswordLength: number
   }
-  database: object
+  database: {
+    host: string
+    name: string
+    password: string
+    user: string
+  }
   server: {
     port: number
   }

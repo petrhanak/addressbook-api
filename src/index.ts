@@ -1,13 +1,12 @@
-import { globalMiddleware } from './middleware/global'
-
 require('dotenv').config() // tslint:disable-line:no-var-requires
-require('database') // tslint:disable-line:no-var-requires
+require('~/database') // tslint:disable-line:no-var-requires
 
-import config from 'config'
 import ip from 'ip'
 import Koa from 'koa'
 import compose from 'koa-compose'
-import { routerMiddleware } from './router'
+import config from '~/config'
+import { globalMiddleware } from '~/middleware/global'
+import { routerMiddleware } from '~/router'
 
 export const createServer = (middlewares: Koa.Middleware[]) =>
   new Koa().use(compose(middlewares))

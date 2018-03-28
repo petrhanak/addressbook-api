@@ -1,5 +1,5 @@
-import app from 'index'
 import request from 'supertest'
+import app from '~/index'
 
 describe('server', () => {
   it('should respond with status 200 and welcome message', () => {

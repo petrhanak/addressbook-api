@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
-import { invalidCredentials, weakPasswordError } from 'common/errors'
-import config from 'config'
 import jwt from 'jsonwebtoken'
 import { omit } from 'ramda'
 import zxcvbn from 'zxcvbn'
-import { User } from '../database/models'
+import { invalidCredentials, weakPasswordError } from '~/common/errors'
+import config from '~/config'
+import { User } from '~/database/models'
 
 export interface IAccessTokenPayload {
   userId: number

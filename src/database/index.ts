@@ -1,9 +1,9 @@
 import Knex from 'knex'
 import { Model } from 'objection'
 import { knexSnakeCaseMappers } from 'objection'
-import config from '../config'
+import dbConfig from './dbConfig'
 
-const knex = Knex(Object.assign({}, config.database, knexSnakeCaseMappers()))
+const knex = Knex(Object.assign({}, dbConfig, knexSnakeCaseMappers()))
 
 Model.knex(knex)
 

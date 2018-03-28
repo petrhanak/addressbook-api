@@ -1,9 +1,9 @@
 import Boom from 'boom'
-import { ErrorCodes, invalidJsonBodyError } from 'common/errors'
 import { Context } from 'koa'
 import bodyParser from 'koa-bodyparser'
 import compose from 'koa-compose'
 import { omit } from 'ramda'
+import { ErrorCodes, invalidJsonBodyError } from '~/common/errors'
 
 const createResponse = (
   message: string,
@@ -16,6 +16,14 @@ const createResponse = (
   },
 })
 
+const getErrorData = (error: Boom): object =>
+  // basic error
+  error.data ||
+  // unauthorized error
+  omit(['error'], error.output.payload.attributes) ||
+  // no data
+  {}
+
 export const errorMiddleware = (ctx: Context, next: () => Promise<any>) => {
   return next().then(
     () => {
@@ -27,12 +35,9 @@ export const errorMiddleware = (ctx: Context, next: () => Promise<any>) => {
       const error = Boom.boomify(err, {
         statusCode: err.status,
       })
+      const data = getErrorData(error)
 
       ctx.status = error.output.statusCode
-
-      // todo refactor
-      const data =
-        error.data || omit(['error'], error.output.payload.attributes) || {}
       ctx.body = createResponse(error.message, data)
     }
   )

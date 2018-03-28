@@ -2,7 +2,7 @@
   "compilerOptions": {
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "noEmit": true,
     "pretty": true,
     "allowSyntheticDefaultImports": true,
@@ -16,9 +16,13 @@
     "rootDirs": [
       "node_modules",
       "src"
-    ]
+    ],
+    "paths": {
+      "~/*" : ["./src/*"]
+    }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ]
 }

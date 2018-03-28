@@ -1,12 +1,12 @@
-import { duplicateEmail } from 'common/errors'
-import { User } from 'database/models'
 import { toLower } from 'ramda'
+import { duplicateEmail } from '~/common/errors'
+import { User } from '~/database/models'
 import {
   checkPasswordStrength,
   generateUserResponse,
   hashPassword,
   validateUser,
-} from 'services/CryptoService'
+} from '~/services/CryptoService'
 
 const checkEmailDuplicity = async (email: string) => {
   const user = await User.query().findOne({ email })

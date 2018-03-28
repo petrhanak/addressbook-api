@@ -1,7 +1,7 @@
 import Koa from 'koa'
 import compose from 'koa-compose'
-import { validate } from 'middleware'
-import { authenticateUser, createUser } from 'services/UserService'
+import { validate } from '~/middleware'
+import { authenticateUser, createUser } from '~/services/UserService'
 import { loginSchema, signupSchema } from './schema/authSchema'
 
 export const signupController = compose([

@@ -4,7 +4,7 @@ import {
   loginController,
   signupController,
   welcomeController,
-} from './controllers'
+} from '~/controllers'
 
 export const router = new Router()
 

@@ -1,7 +1,7 @@
-import { User } from 'database/models'
-import app from 'index'
-import { verifyAccessToken } from 'services/CryptoService'
 import request from 'supertest'
+import { User } from '~/database/models'
+import app from '~/index'
+import { verifyAccessToken } from '~/services/CryptoService'
 import { resetDatabase } from '../utils'
 
 describe('endpoint > /login', () => {

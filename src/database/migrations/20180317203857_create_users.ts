@@ -1,6 +1,8 @@
+import Knex from 'knex'
+
 const bcryptHashLength = 60
 
-exports.up = knex =>
+exports.up = (knex: Knex) =>
   knex.schema.createTable('users', table => {
     table.increments('id')
     table.string('name')
@@ -8,6 +10,4 @@ exports.up = knex =>
     table.string('password', bcryptHashLength)
   })
 
-
-exports.down = knex =>
-  knex.schema.dropTable('users')
+exports.down = (knex: Knex) => knex.schema.dropTable('users')

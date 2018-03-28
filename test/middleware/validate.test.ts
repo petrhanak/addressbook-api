@@ -1,9 +1,9 @@
-import { createServer } from 'index'
 import joi from 'joi'
 import Koa from 'koa'
-import { globalMiddleware } from 'middleware/global'
-import { validate } from 'middleware/validate'
 import request from 'supertest'
+import { createServer } from '~/index'
+import { globalMiddleware } from '~/middleware/global'
+import { validate } from '~/middleware/validate'
 
 describe('middleware > validate', () => {
   it('should validate request body', () => {

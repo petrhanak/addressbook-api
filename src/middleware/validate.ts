@@ -1,6 +1,6 @@
-import { validationError } from 'common/errors'
 import joi from 'joi'
 import { IRouterContext } from 'koa-router'
+import { validationError } from '~/common/errors'
 
 export const validate = (schema: any) => (
   ctx: IRouterContext,

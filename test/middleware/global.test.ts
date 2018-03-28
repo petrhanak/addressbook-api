@@ -1,7 +1,7 @@
-import { createServer } from 'index'
 import Koa from 'koa'
-import { bodyParserMiddleware, errorMiddleware } from 'middleware/global'
 import request from 'supertest'
+import { createServer } from '~/index'
+import { bodyParserMiddleware, errorMiddleware } from '~/middleware/global'
 
 describe('middleware > global', () => {
   it('should handle internal server error', () => {

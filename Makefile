@@ -44,24 +44,24 @@ cleanup:
 	tsc
 
 db-create-migration:
-	knex migrate:make ${NAME} --knexfile ./src/database/knexfile.js
+	knex migrate:make ${name}
 
 db-migrate:
 	$(call log, "Database migration")
-	knex migrate:latest --knexfile ./src/database/knexfile.js
+	knex migrate:latest
 
 db-rollback:
 	$(call log, "Database rollback")
-	knex migrate:rollback --knexfile ./src/database/knexfile.js
+	knex migrate:rollback
 
 db-reset: db-rollback db-migrate
 
 db-create-seed:
-	knex seed:make ${NAME} --knexfile ./src/database/knexfile.js
+	knex seed:make ${name}
 
 db-seed:
 	$(call log, "Database seed")
-	knex seed:run --knexfile ./src/database/knexfile.js
+	knex seed:run
 
 
 rules := \
