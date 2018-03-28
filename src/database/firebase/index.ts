@@ -5,7 +5,10 @@ export default firebase
   .initializeApp({
     credential: firebase.credential.cert({
       clientEmail: config.database.firebase.clientEmail,
-      privateKey: atob(config.database.firebase.privateKey),
+      privateKey: Buffer.from(
+        config.database.firebase.privateKey,
+        'base64'
+      ).toString('ascii'),
     }),
     databaseURL: config.database.firebase.databaseURL,
   })
