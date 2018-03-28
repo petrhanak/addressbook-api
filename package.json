@@ -2,13 +2,14 @@
   "name": "addressbook-api",
   "scripts": {
     "test": "make test",
-    "precommit": "lint-staged",
+    "precommit": "lint-staged && tsc",
     "heroku-postbuild": "make compile"
   },
   "type-check": "tsc",
   "lint-staged": {
     "{src,test}/**/*.ts": [
-      "prettier --write",
+      "prettier --write --loglevel warn",
+      "tslint --force --fix",
       "git add"
     ]
   },
@@ -19,6 +20,7 @@
     "bcrypt": "^1.0.3",
     "boom": "^7.2.0",
     "dotenv": "^5.0.0",
+    "firebase": "^4.12.0",
     "ip": "^1.1.5",
     "joi": "^13.1.1",
     "knex": "^0.14.2",

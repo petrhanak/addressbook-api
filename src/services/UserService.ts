@@ -1,6 +1,6 @@
 import { toLower } from 'ramda'
 import { duplicateEmail } from '~/common/errors'
-import { User } from '~/database/models'
+import { User } from '~/database/sql/models'
 import {
   checkPasswordStrength,
   generateUserResponse,

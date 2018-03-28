@@ -1,3 +1,3 @@
-import dbConfig from './src/database/dbConfig'
+import dbConfig from './src/database/sql/dbConfig'
 
 module.exports = dbConfig

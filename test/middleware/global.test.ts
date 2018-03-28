@@ -4,6 +4,33 @@ import { createServer } from '~/index'
 import { bodyParserMiddleware, errorMiddleware } from '~/middleware/global'
 
 describe('middleware > global', () => {
+  it('should handle ok status', () => {
+    const customApp = createServer([
+      errorMiddleware,
+      (ctx: Koa.Context) => {
+        ctx.body = {
+          foo: 'bar',
+        }
+      },
+    ])
+
+    return request(customApp.listen())
+      .get('/')
+      .expect(200, {
+        foo: 'bar',
+      })
+  })
+
+  it('should handle non-error status', () => {
+    const customApp = createServer([errorMiddleware])
+
+    return request(customApp.listen())
+      .get('/')
+      .expect(404, {
+        error: { code: 'Unknown', message: 'Not Found' },
+      })
+  })
+
   it('should handle internal server error', () => {
     const customApp = createServer([
       errorMiddleware,

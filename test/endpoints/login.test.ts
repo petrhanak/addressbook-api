@@ -1,24 +1,13 @@
 import request from 'supertest'
-import { User } from '~/database/models'
 import app from '~/index'
 import { verifyAccessToken } from '~/services/CryptoService'
-import { resetDatabase } from '../utils'
 
 describe('endpoint > /login', () => {
-  beforeAll(async () => {
-    await resetDatabase()
-    await User.query().insert({
-      email: 'john.doe@example.com',
-      name: 'John Doe',
-      password: '$2a$10$oVRCpVpaROcPZ/dwpREwsewLICK4q9R6ezmVTpSRek3NT7EJsKyuS', // Addr3ssBo0k$
-    })
-  })
-
   it('should fail for unknown email', () => {
     return request(app.listen())
       .post('/login')
       .send({
-        email: 'abc@example.com',
+        email: 'unknown@example.com',
         password: '1234',
       })
       .expect(401, {
@@ -44,26 +33,14 @@ describe('endpoint > /login', () => {
       })
   })
 
-  it('should fail for already existing user with lowercase email', async () => {
-    await User.query().insert({
-      email: 'john.doe@example.com',
-      name: 'John Doe',
-      password: '',
-    })
-
+  it('should work for already existing user with lowercase email', () => {
     return request(app.listen())
-      .post('/signup')
+      .post('/login')
       .send({
         email: 'joHn.Doe@example.com',
-        name: 'John Doe',
-        password: '-20v3DF+facB;a}',
+        password: 'Addr3ssBo0k$',
       })
-      .expect(409, {
-        error: {
-          code: 'DuplicateEmail',
-          message: 'Email is already registered',
-        },
-      })
+      .expect(200)
   })
 
   it('should send user account and access token', async () => {

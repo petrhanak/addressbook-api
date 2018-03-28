@@ -4,14 +4,23 @@ import productionConfig from './production'
 interface IConfig {
   auth: {
     cryptoRounds: number
-    secret: string
     effectivePasswordLength: number
+    secret: {
+      jwt: string
+    }
   }
   database: {
-    host: string
-    name: string
-    password: string
-    user: string
+    firebase: {
+      apiKey: string
+      authDomain: string
+      databaseURL: string
+    }
+    sql: {
+      host: string
+      name: string
+      password: string
+      user: string
+    }
   }
   server: {
     port: number

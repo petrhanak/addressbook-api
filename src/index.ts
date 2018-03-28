@@ -1,5 +1,4 @@
-require('dotenv').config() // tslint:disable-line:no-var-requires
-require('~/database') // tslint:disable-line:no-var-requires
+import './init'
 
 import ip from 'ip'
 import Koa from 'koa'
@@ -13,11 +12,19 @@ export const createServer = (middlewares: Koa.Middleware[]) =>
 
 const app = createServer([globalMiddleware, routerMiddleware])
 
-if (!module.parent) {
-  const httpServer = app.listen(config.server.port, () => {
-    const address = `${ip.address()}:${httpServer.address().port}`
-    console.info(`Server running on ${address}`) // tslint:disable-line:no-console
+export const startApp = (): Promise<any> =>
+  new Promise(resolve => {
+    const httpServer = app.listen(config.server.port, () => {
+      const address = `${ip.address()}:${httpServer.address().port}`
+      console.info(`Server running on ${address}`) // tslint:disable-line:no-console
+
+      resolve()
+    })
   })
+
+/* istanbul ignore next */
+if (!module.parent) {
+  startApp()
 }
 
 export default app

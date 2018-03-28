@@ -9,8 +9,6 @@
     "target": "es2017",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "build/",
-    "allowJs": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "rootDirs": [

@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { omit } from 'ramda'
+import { omit, propIs } from 'ramda'
 import zxcvbn from 'zxcvbn'
 import { invalidCredentials, weakPasswordError } from '~/common/errors'
 import config from '~/config'
-import { User } from '~/database/models'
+import { User } from '~/database/sql/models'
 
 export interface IAccessTokenPayload {
   userId: number
@@ -26,10 +26,16 @@ export const checkPasswordStrength = (password: string) => {
 }
 
 export const createAccessToken = (userId: number) =>
-  jwt.sign({ userId }, config.auth.secret)
+  jwt.sign({ userId }, config.auth.secret.jwt)
 
 export const verifyAccessToken = (accessToken: string): IAccessTokenPayload =>
-  jwt.verify(accessToken, config.auth.secret) as IAccessTokenPayload
+  jwt.verify(accessToken, config.auth.secret.jwt) as IAccessTokenPayload
+
+export const validateJwtPayload = (payload: object) => {
+  if (!propIs(Number, 'userId', payload)) {
+    throw invalidCredentials()
+  }
+}
 
 export const sanitizeUser = (user: User) => omit(['password'], user)
 

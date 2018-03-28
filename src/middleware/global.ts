@@ -20,13 +20,12 @@ const getErrorData = (error: Boom): object =>
   // basic error
   error.data ||
   // unauthorized error
-  omit(['error'], error.output.payload.attributes) ||
-  // no data
-  {}
+  omit(['error'], error.output.payload.attributes)
 
 export const errorMiddleware = (ctx: Context, next: () => Promise<any>) => {
   return next().then(
     () => {
+      ctx.status = ctx.response.status
       if (!ctx.body) {
         ctx.body = createResponse(ctx.response.message)
       }

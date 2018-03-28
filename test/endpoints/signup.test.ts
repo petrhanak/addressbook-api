@@ -1,14 +1,8 @@
 import request from 'supertest'
-import { User } from '~/database/models'
 import app from '~/index'
 import { verifyAccessToken } from '~/services/CryptoService'
-import { resetDatabase } from '../utils'
 
 describe('endpoint > /signup', () => {
-  beforeEach(async () => {
-    await resetDatabase()
-  })
-
   it('should fail for weak password', () => {
     return request(app.listen())
       .post('/signup')
@@ -26,13 +20,7 @@ describe('endpoint > /signup', () => {
       })
   })
 
-  it('should fail for already existing user with lowercase email', async () => {
-    await User.query().insert({
-      email: 'john.doe@example.com',
-      name: 'John Doe',
-      password: '',
-    })
-
+  it('should fail for already existing user with lowercase email', () => {
     return request(app.listen())
       .post('/signup')
       .send({
@@ -48,13 +36,7 @@ describe('endpoint > /signup', () => {
       })
   })
 
-  it('should fail for already existing user with lowercase email', async () => {
-    await User.query().insert({
-      email: 'john.doe@example.com',
-      name: 'John Doe',
-      password: '',
-    })
-
+  it('should fail for already existing user with lowercase email', () => {
     return request(app.listen())
       .post('/signup')
       .send({
@@ -74,14 +56,14 @@ describe('endpoint > /signup', () => {
     const { body } = await request(app.listen())
       .post('/signup')
       .send({
-        email: 'foo@example.com',
+        email: 'foobar@example.com',
         name: 'John Doe',
         password: '-20v3DF+facB;a}',
       })
       .expect(200)
 
     expect(body.user).toMatchObject({
-      email: 'foo@example.com',
+      email: 'foobar@example.com',
       name: 'John Doe',
     })
     expect(body.user).not.toHaveProperty('password')
@@ -91,22 +73,19 @@ describe('endpoint > /signup', () => {
     const { body } = await request(app.listen())
       .post('/signup')
       .send({
-        email: 'joHn.Doe@example.com',
-        name: 'John Doe',
+        email: 'joHn.Doe2@example.com',
+        name: 'Johnny',
         password: '-20v3DF+facB;a}',
       })
       .expect(200)
 
     expect(body.user).toMatchObject({
-      email: 'john.doe@example.com',
-      id: 1,
-      name: 'John Doe',
+      email: 'john.doe2@example.com',
+      name: 'Johnny',
     })
 
     const payload = verifyAccessToken(body.accessToken)
-    expect(payload).toMatchObject({ userId: 1 })
+    expect(payload).toMatchObject({ userId: body.user.id })
     expect(payload).not.toHaveProperty('password')
   })
 })
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTUyMjE0Nzc1Mn0.Oy0MqauCaQorKmb5Hli9u6DYzPiUEHQVqjCsB4SHGwE
