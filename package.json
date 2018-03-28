@@ -33,7 +33,6 @@
     "objection": "^0.9.4",
     "pg": "^7.4.1",
     "ramda": "^0.25.0",
-    "ts-node": "^5.0.1",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
@@ -67,13 +66,14 @@
     "prettier": "^1.10.2",
     "supertest": "^3.0.0",
     "ts-jest": "^22.0.3",
+    "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.7.0",
     "typescript": "^2.7.1"
   },
   "license": "ISC",
   "engines": {
-    "node": "^8.10.0",
+    "node": "^9.9.0",
     "npm": "^5.6.0"
   }
 }
