@@ -49,8 +49,6 @@ export const authenticateUser = async ({
 }) => {
   const lowerEmail = toLower(email)
 
-  // const passwordHash = await hashPassword(password)
-
   const user = await User.query().findOne({ email: lowerEmail })
 
   await validateUser(user, password)

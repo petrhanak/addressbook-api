@@ -1,2 +1,3 @@
-export * from './WelcomeController'
 export * from './AuthController'
+export * from './ContactsController'
+export * from './WelcomeController'

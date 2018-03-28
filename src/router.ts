@@ -1,6 +1,7 @@
 import compose from 'koa-compose'
 import Router from 'koa-router'
 import {
+  createContactController,
   loginController,
   signupController,
   welcomeController,
@@ -15,6 +16,9 @@ router
   // auth
   .post('/signup', signupController)
   .post('/login', loginController)
+
+  // contact
+  .post('/contact', createContactController)
 
 export const routerMiddleware = compose([
   router.routes(),

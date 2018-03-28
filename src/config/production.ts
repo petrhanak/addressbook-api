@@ -8,10 +8,9 @@ export default {
   },
   database: {
     firebase: {
-      apiKey: process.env.DATABASE_FIREBASE_APIKEY,
-      authDomain: process.env.DATABASE_FIREBASE_AUTHDOMAIN,
+      clientEmail: process.env.DATABASE_FIREBASE_CLIENTEMAIL,
       databaseURL: process.env.DATABASE_FIREBASE_DATABASEURL,
-      projectId: process.env.DATABASE_FIREBASE_PROJECTID,
+      privateKey: process.env.DATABASE_FIREBASE_PRIVATEKEY,
     },
     sql: {
       host: process.env.DATABASE_SQL_HOST,

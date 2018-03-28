@@ -11,9 +11,9 @@ interface IConfig {
   }
   database: {
     firebase: {
-      apiKey: string
-      authDomain: string
+      clientEmail: string
       databaseURL: string
+      privateKey: string
     }
     sql: {
       host: string

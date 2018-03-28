@@ -1,3 +1,3 @@
 import firebaseDatabase from '../'
 
-firebaseDatabase.ref('/').child('posts')
+export const Contact = firebaseDatabase.ref('/').child('contacts')
