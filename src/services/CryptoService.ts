@@ -2,7 +2,11 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { omit, propIs } from 'ramda'
 import zxcvbn from 'zxcvbn'
-import { invalidCredentials, weakPasswordError } from '~/common/errors'
+import {
+  invalidCredentials,
+  invalidJwtPayload,
+  weakPasswordError,
+} from '~/common/errors'
 import config from '~/config'
 import { User } from '~/database/sql/models'
 
@@ -11,12 +15,12 @@ export interface IAccessTokenPayload {
 }
 
 export const hashPassword = async (password: string) =>
-  await bcrypt.hash(password, config.auth.cryptoRounds)
+  await bcrypt.hash(password, config.auth.password.cryptoRounds)
 
 export const checkPasswordStrength = (password: string) => {
   const truncatedPassword = password.slice(
     0,
-    config.auth.effectivePasswordLength
+    config.auth.password.effectiveLength
   )
   const passwordSecurity = zxcvbn(truncatedPassword)
 
@@ -26,14 +30,16 @@ export const checkPasswordStrength = (password: string) => {
 }
 
 export const createAccessToken = (userId: number) =>
-  jwt.sign({ userId }, config.auth.secret.jwt)
+  jwt.sign({ userId }, config.auth.jwt.secret, {
+    expiresIn: config.auth.jwt.expiresIn,
+  })
 
 export const verifyAccessToken = (accessToken: string): IAccessTokenPayload =>
-  jwt.verify(accessToken, config.auth.secret.jwt) as IAccessTokenPayload
+  jwt.verify(accessToken, config.auth.jwt.secret) as IAccessTokenPayload
 
 export const validateJwtPayload = (payload: object) => {
   if (!propIs(Number, 'userId', payload)) {
-    throw invalidCredentials()
+    throw invalidJwtPayload()
   }
 }
 

@@ -1,9 +1,12 @@
 export default {
   auth: {
-    cryptoRounds: 10,
-    effectivePasswordLength: 72,
-    secret: {
-      jwt: 'abc123',
+    jwt: {
+      expiresIn: '1h',
+      secret: 'abc123',
+    },
+    password: {
+      cryptoRounds: 10,
+      effectiveLength: 72,
     },
   },
   database: {

@@ -8,6 +8,7 @@ export enum ErrorCodes {
   WEAK_PASSWORD = 'WeakPassword',
   DUPLICATE_EMAIL = 'DuplicateEmail',
   INVALID_CREDENTIALS = 'InvalidCredentials',
+  INVALID_JWT_PAYLOAD = 'InvalidJwtPayload',
 }
 
 export const validationError = (message: any): Boom =>
@@ -34,4 +35,9 @@ export const duplicateEmail = (): Boom =>
 export const invalidCredentials = (): Boom =>
   Boom.unauthorized('Login credentials are incorrect', 'Bearer', {
     code: ErrorCodes.INVALID_CREDENTIALS,
+  })
+
+export const invalidJwtPayload = (): Boom =>
+  Boom.unauthorized('Invalid JWT payload data', 'Bearer', {
+    code: ErrorCodes.INVALID_JWT_PAYLOAD,
   })

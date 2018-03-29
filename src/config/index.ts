@@ -3,10 +3,13 @@ import productionConfig from './production'
 
 interface IConfig {
   auth: {
-    cryptoRounds: number
-    effectivePasswordLength: number
-    secret: {
-      jwt: string
+    jwt: {
+      expiresIn: string | number
+      secret: string
+    }
+    password: {
+      cryptoRounds: number
+      effectiveLength: number
     }
   }
   database: {

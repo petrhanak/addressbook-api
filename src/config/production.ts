@@ -1,9 +1,12 @@
 export default {
   auth: {
-    cryptoRounds: 10,
-    effectivePasswordLength: 72,
-    secret: {
-      jwt: process.env.AUTH_SECRET_JWT,
+    jwt: {
+      expiresIn: '1h',
+      secret: process.env.AUTH_JWT_SECRET,
+    },
+    password: {
+      cryptoRounds: 10,
+      effectiveLength: 72,
     },
   },
   database: {
